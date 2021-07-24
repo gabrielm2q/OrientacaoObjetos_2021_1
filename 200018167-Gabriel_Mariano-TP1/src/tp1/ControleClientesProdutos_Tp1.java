@@ -1,7 +1,35 @@
 package tp1;
-import java.util.Scanner;
+import java.util.*;
 
 public class ControleClientesProdutos_Tp1 {
+	
+	public static void cadastrarClientes(ArrayList<String> nome, ArrayList<String> endereco, ArrayList<String> telefone) {
+		int qtdCadastrar;
+		Scanner ler = new Scanner(System.in);
+		
+		System.out.println("\n~ CADASTRAR CLIENTES ~");
+		do { // O usuário deverá digitar uma quant. de clientes a serem cadastrados maior ou igual a 1
+			System.out.print("Digite a quantidade de clientes a serem cadastrados: ");
+			qtdCadastrar = ler.nextInt();	
+			
+			if(qtdCadastrar < 1) { // Apresenta mensagem para informar o erro ao usuário
+				System.out.println("O valor inserido deve ser maior que zero!");
+			}
+		}while(qtdCadastrar < 1); //Se repete até a quant. ser maior ou igual a 1
+		
+		ler.nextLine(); // Limpando o Buffer do Teclado
+		
+		for(int aux = 0; aux < qtdCadastrar; aux++) { // Recebendo os dados dos clientes
+			System.out.println("\nDigite o " + (aux+1) + "º nome: "); // Recebendo o nome
+			nome.add(ler.nextLine());
+			
+			System.out.println("Digite seu endereço: "); // Recebendo o endereço
+			endereco.add(ler.nextLine());
+			
+			System.out.println("Digite seu telefone: "); // Recebendo o telefone
+			telefone.add(ler.nextLine());
+		}
+	}
 
 	public static int imprimirMenu() { // Método que imprime o Menu e verifica se a opção digitada é válida
 		int opcao;
@@ -36,6 +64,10 @@ public class ControleClientesProdutos_Tp1 {
 
 	public static void main(String[] args) { // Método Principal
 		int opcMenu;
+		ArrayList<String> nome = new ArrayList<String>();
+		ArrayList<String> endereco = new ArrayList<String>();
+		ArrayList<String> telefone = new ArrayList<String>();
+		
 		Scanner ler = new Scanner(System.in);
 
 		criarLinha(60); // Imprimindo uma linha (apenas pela estética)
@@ -46,6 +78,8 @@ public class ControleClientesProdutos_Tp1 {
 
 			switch (opcMenu) { // Direcionando o usuário de acordo com a opção desejada
 				case 1: // Cadastro de novo cliente
+					criarLinha(60);
+					cadastrarClientes(nome, endereco, telefone);
 					break;
 				case 2: // Busca por cliente
 					break;
@@ -67,8 +101,10 @@ public class ControleClientesProdutos_Tp1 {
 					System.out.println("\nERRO!");
 					criarLinha(60);
 			}
+			
 			criarLinha(60);
 		}while(opcMenu != 7);
 		
 	}
 }
+
