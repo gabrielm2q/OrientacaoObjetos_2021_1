@@ -1,5 +1,4 @@
 package tp1;
-
 import java.util.Scanner;
 
 public class ControleClientesProdutos_Tp1 {
@@ -26,7 +25,7 @@ public class ControleClientesProdutos_Tp1 {
 			}
 		}while(opcao < 1 || opcao > 7); // Qualquer opção que não esteja no intervalo 1-7 é inválida
 
-		return opcao; // Retornando a opção escolhida
+		return opcao; // Retornando a opção escolhida pelo usuário
 	}
 
 	public static void criarLinha(int tamanho) { // Método utilizado para criar uma linha com o tamanho determinado
