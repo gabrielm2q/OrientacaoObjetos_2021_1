@@ -3,6 +3,42 @@ import java.util.*;
 
 public class ControleClientesProdutos_Tp1 {
 	
+	public static void cadastrarProdutos(ArrayList<String> nomeProduto, ArrayList<String> descricao, ArrayList<Double> valorCompra, ArrayList<Double> porcentLucro, ArrayList<Integer> qtdEstoque) {
+		int qtdCadastrar;
+		Scanner ler = new Scanner(System.in);
+		
+		System.out.println("\n~ CADASTRAR PRODUTOS ~");
+		
+		do { // O usuário deverá digitar uma quant. de produtos a serem cadastrados maior ou igual a 1
+			System.out.print("Digite a quantidade de produtos a serem cadastrados: ");
+			qtdCadastrar = ler.nextInt();	
+			
+			if(qtdCadastrar < 1) { // Apresenta mensagem para informar o erro ao usuário
+				System.out.println("O valor inserido deve ser maior que zero!");
+			}
+		}while(qtdCadastrar < 1); //Se repete até a quant. ser maior ou igual a 1
+		
+		for(int aux = 0; aux < qtdCadastrar; aux++) { // Recebendo os dados dos produtos
+			ler.nextLine(); // Limpando Buffer 
+			
+			System.out.print("\nDigite o nome do " + (aux+1) + "º produto: "); // Recebendo o nome
+			nomeProduto.add(ler.nextLine());
+			
+			System.out.print("Digite a descrição do produto: "); // Recebendo a descrição
+			descricao.add(ler.nextLine());
+			
+			System.out.print("Digite o valor de compra do produto: R$ "); // Recebendo o valor de compra
+			valorCompra.add(ler.nextDouble());
+			
+			System.out.print("Digite a porcentagem de lucro do produto (sem '%'): "); // Recebendo a porcentagem de lucro
+			porcentLucro.add(ler.nextDouble());
+			
+			System.out.print("Digite a quantidade em estoque do produto: "); // Recebendo a qtd em estoque
+			qtdEstoque.add(ler.nextInt());
+		}
+		
+	}
+	
 	public static void buscarClientes(ArrayList<String> nome, ArrayList<String> endereco, ArrayList<String> telefone) {
 		String nomeBuscar;
 		int posicaoCliente;
@@ -63,13 +99,13 @@ public class ControleClientesProdutos_Tp1 {
 		ler.nextLine(); // Limpando o Buffer do Teclado
 		
 		for(int aux = 0; aux < qtdCadastrar; aux++) { // Recebendo os dados dos clientes
-			System.out.println("\nDigite o " + (aux+1) + "º nome: "); // Recebendo o nome
+			System.out.print("\nDigite o " + (aux+1) + "º nome: "); // Recebendo o nome
 			nome.add(ler.nextLine());
 			
-			System.out.println("Digite seu endereço: "); // Recebendo o endereço
+			System.out.print("Digite seu endereço: "); // Recebendo o endereço
 			endereco.add(ler.nextLine());
 			
-			System.out.println("Digite seu telefone: "); // Recebendo o telefone
+			System.out.print("Digite seu telefone: "); // Recebendo o telefone
 			telefone.add(ler.nextLine());
 		}
 	}
@@ -107,9 +143,18 @@ public class ControleClientesProdutos_Tp1 {
 
 	public static void main(String[] args) { // Método Principal
 		int opcMenu;
+		
+		// Dados dos Clientes
 		ArrayList<String> nome = new ArrayList<String>();
 		ArrayList<String> endereco = new ArrayList<String>();
 		ArrayList<String> telefone = new ArrayList<String>();
+		
+		// Dados dos Produtos
+		ArrayList<String> nomeProduto = new ArrayList<String>();
+		ArrayList<String> descricao = new ArrayList<String>();
+		ArrayList<Double> valorCompra = new ArrayList<Double>();
+		ArrayList<Double> porcentLucro = new ArrayList<Double>();
+		ArrayList<Integer> qtdEstoque = new ArrayList<Integer>();
 		
 		Scanner ler = new Scanner(System.in);
 
@@ -129,6 +174,8 @@ public class ControleClientesProdutos_Tp1 {
 					buscarClientes(nome, endereco, telefone);
 					break;
 				case 3: // Cadastro de novo produto
+					criarLinha(60);
+					cadastrarProdutos(nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
 					break;
 				case 4: // Busca por produto
 					break;
@@ -148,7 +195,7 @@ public class ControleClientesProdutos_Tp1 {
 			}
 			
 			criarLinha(60);
-		}while(opcMenu != 7);		
+		}while(opcMenu != 7);
 	}
 }
 
