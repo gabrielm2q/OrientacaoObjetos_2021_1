@@ -3,6 +3,49 @@ import java.util.*;
 
 public class ControleClientesProdutos_Tp1 {
 	
+	public static void buscarClientes(ArrayList<String> nome, ArrayList<String> endereco, ArrayList<String> telefone) {
+		String nomeBuscar;
+		int posicaoCliente;
+		char desejaAlterar;		
+		Scanner ler = new Scanner(System.in);
+		
+		System.out.println("\n~ BUSCAR CLIENTES ~");
+		System.out.print("Digite o nome do(a) cliente a ser procurado: ");
+		nomeBuscar = ler.nextLine();
+		if(nome.contains(nomeBuscar)) {
+			System.out.println("\nDados do Cliente: ");
+			System.out.println("Nome: " + nome.get(nome.indexOf(nomeBuscar)));
+			System.out.println("Endereço: " + endereco.get(nome.indexOf(nomeBuscar)));
+			System.out.println("Telefone: " + telefone.get(nome.indexOf(nomeBuscar)));
+			
+			System.out.print("\nDeseja alterar os dados do(a) cliente? ('S' ou 'N'): ");
+			desejaAlterar = ler.next().charAt(0);
+			ler.nextLine(); //Limpando Buffer
+		} else {
+			System.out.println("\nCliente não encontrado!");
+			desejaAlterar = 'n';
+		}
+		
+		posicaoCliente = nome.indexOf(nomeBuscar);
+		
+		if (desejaAlterar == 'S' || desejaAlterar == 's') {
+			System.out.println("\n ~ Alterando Nome ~");
+			System.out.println("Digite o nome do(a) cliente: ");
+			nome.set(posicaoCliente, ler.nextLine());
+			
+			System.out.println("\n~ Alterando Endereço ~");
+			System.out.println("Digite o endereço do(a) cliente: ");
+			endereco.set(posicaoCliente, ler.nextLine());
+			
+			System.out.println("\n~ Alterando Telefone ~");
+			System.out.println("Digite o telefone do(a) cliente: ");
+			telefone.set(posicaoCliente, ler.nextLine());
+			
+			System.out.println("\nDados Atualizados!");			
+		}
+		
+	}
+	
 	public static void cadastrarClientes(ArrayList<String> nome, ArrayList<String> endereco, ArrayList<String> telefone) {
 		int qtdCadastrar;
 		Scanner ler = new Scanner(System.in);
@@ -82,6 +125,8 @@ public class ControleClientesProdutos_Tp1 {
 					cadastrarClientes(nome, endereco, telefone);
 					break;
 				case 2: // Busca por cliente
+					criarLinha(60);
+					buscarClientes(nome, endereco, telefone);
 					break;
 				case 3: // Cadastro de novo produto
 					break;
@@ -103,8 +148,7 @@ public class ControleClientesProdutos_Tp1 {
 			}
 			
 			criarLinha(60);
-		}while(opcMenu != 7);
-		
+		}while(opcMenu != 7);		
 	}
 }
 
