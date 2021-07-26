@@ -3,6 +3,60 @@ import java.util.*;
 
 public class ControleClientesProdutos_Tp1 {
 	
+	public static void buscarProdutos(ArrayList<String> nomeProduto, ArrayList<String> descricao, ArrayList<Double> valorCompra, ArrayList<Double> porcentLucro, ArrayList<Integer> qtdEstoque) {
+		char desejaAlterar;
+		String nomeProd;
+		int indexProduto;
+		Scanner ler = new Scanner(System.in);
+		
+		System.out.println("\n~ BUSCAR PRODUTOS ~");
+		System.out.print("Digite o nome do(a) produto a ser procurado: ");
+		nomeProd = ler.nextLine();
+		
+		if(nomeProduto.contains(nomeProd)) {
+			System.out.println("\nDados do Produto: ");
+			System.out.println("Nome do Produto: " + nomeProduto.get(nomeProduto.indexOf(nomeProd)));
+			System.out.println("Descrição: " + descricao.get(nomeProduto.indexOf(nomeProd)));
+			System.out.println("Valor de Compra: R$ " + valorCompra.get(nomeProduto.indexOf(nomeProd)));
+			System.out.println("Porcentagem de Lucro: " + porcentLucro.get(nomeProduto.indexOf(nomeProd)) + " %");
+			System.out.println("Quantidade em Estoque: " + qtdEstoque.get(nomeProduto.indexOf(nomeProd)));
+			
+			System.out.print("\nDeseja alterar os dados do(a) produto? ('S' ou 'N'): ");
+			desejaAlterar = ler.next().charAt(0);
+			ler.nextLine(); //Limpando Buffer
+		} else {
+			System.out.println("\nProduto não encontrado!");
+			desejaAlterar = 'n';
+		}
+		
+		
+		
+		if (desejaAlterar == 'S' || desejaAlterar == 's') {
+			indexProduto = nomeProduto.indexOf(nomeProd);
+			System.out.println("\n ~ Alterando Nome ~");
+			System.out.print("Digite o nome do(a) produto: ");
+			nomeProduto.set(indexProduto, ler.nextLine());
+			
+			System.out.println("\n~ Alterando Descrição ~");
+			System.out.print("Digite a descrição do produto: ");
+			descricao.set(indexProduto, ler.nextLine());
+			
+			System.out.println("\n~ Alterando Valor de Compra ~");
+			System.out.print("Digite o valor de compra do produto: R$ ");
+			valorCompra.set(indexProduto, ler.nextDouble());
+			
+			System.out.println("\n~ Alterando Porcentagem de Lucro ~");
+			System.out.print("Digite a porcentagem de lucro do produto (sem '%'): ");
+			porcentLucro.set(indexProduto, ler.nextDouble());
+			
+			System.out.println("\n~ Alterando Quantidade em Estoque ~");
+			System.out.print("Digite a quantidade em estoque do produto: ");
+			qtdEstoque.set(indexProduto, ler.nextInt());
+			
+			System.out.println("\nDados Atualizados!");			
+		}
+	}
+	
 	public static void cadastrarProdutos(ArrayList<String> nomeProduto, ArrayList<String> descricao, ArrayList<Double> valorCompra, ArrayList<Double> porcentLucro, ArrayList<Integer> qtdEstoque) {
 		int qtdCadastrar;
 		Scanner ler = new Scanner(System.in);
@@ -62,9 +116,10 @@ public class ControleClientesProdutos_Tp1 {
 			desejaAlterar = 'n';
 		}
 		
-		posicaoCliente = nome.indexOf(nomeBuscar);
+		
 		
 		if (desejaAlterar == 'S' || desejaAlterar == 's') {
+			posicaoCliente = nome.indexOf(nomeBuscar);
 			System.out.println("\n ~ Alterando Nome ~");
 			System.out.println("Digite o nome do(a) cliente: ");
 			nome.set(posicaoCliente, ler.nextLine());
@@ -178,6 +233,8 @@ public class ControleClientesProdutos_Tp1 {
 					cadastrarProdutos(nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
 					break;
 				case 4: // Busca por produto
+					criarLinha(60);
+					buscarProdutos(nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
 					break;
 				case 5: // Cadastro de venda
 					break;
