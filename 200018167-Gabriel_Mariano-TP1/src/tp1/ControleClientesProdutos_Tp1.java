@@ -21,6 +21,8 @@ public class ControleClientesProdutos_Tp1 {
 		double [] porcentLucro = new double[TAMANHO_VETOR];
 		int [] qtdEstoque = new int[TAMANHO_VETOR];
 		
+		preencherVetores(nome, endereco, telefone, nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
+		
 		Scanner ler = new Scanner(System.in);
 
 		criarLinha(60); // Imprimindo uma linha (apenas pela estética)
@@ -47,6 +49,8 @@ public class ControleClientesProdutos_Tp1 {
 					buscarProdutos(nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
 					break;
 				case 5: // Cadastro de venda
+					criarLinha(60);
+					cadastrarVendas(nome, nomeProduto, qtdEstoque);
 					break;
 				case 6: // Mostrar produtos em estoque
 					break;
@@ -62,17 +66,71 @@ public class ControleClientesProdutos_Tp1 {
 			
 			criarLinha(60);
 		}while(opcMenu != 7);
+	}
+	
+	
+	
+	public static void preencherVetores(String nome[], String endereco[], String telefone[], String nomeProduto[], String descricao[], double valorCompra[], double porcentLucro[], int qtdEstoque[]) {
+		int aux;
 		
-		// Testando		
-		/*for(int aux = 0; aux < numClientes; aux++) { // Recebendo os dados dos clientes
-			System.out.println("\n");
-			System.out.println((aux+1) + "º nome: " + nome[aux]);
+		// Dados Carregados dos Clientes
+		String [] nomesGerados = {"Pedro", "Paulo", "Mateus", "João", "Maria", "Noah", "Marcos", "Louise", "Alice", "Sofia"};
+		String [] enderecosGerados = {"Rua dos Cristais", "Rua da Saudade", "Rua 7 de Setembro", "Rua 9 de Julho", "Rua 5 de Agosto", "Rua Loureiros", "Parques Elísios", "Residencial Copacabana", "Rua dos Príncipes", "Avenida Conde Drácula"};
+		
+		// Dados Carregados dos Produtos
+		String [] produtoGerado = {"Bombom", "Chips", "Paçoca", "Gelatina", "Geléia", "Brigadeiro", "Mousse", "Laranja", "Banana", "Maçã"};
+		String [] descricaoGerada = {"Chocolate", "Batata Chip", "Doce de Amendoim", "Pacote de Gelatina", "Compota de Geléia", "Chocolate com Granulado", "Mousse de Maracujá", "Fruta Laranja", "Fruta Banana", "Fruta Maçã"};
+		
+		
+		Random random = new Random(); // Instanciando a classe Random
+		
+		for(aux = 0; aux < 10; aux++) { //Preenchendo os vetores com os dados carregados dos produtos e clientes
+			nome[aux] = nomesGerados[aux]; 
+			endereco[aux] = enderecosGerados[aux]; 
 			
-			System.out.println("Endereço: " + endereco[aux]);
-			
-			System.out.println("Telefone: " + telefone[aux]);
+			nomeProduto[aux] = produtoGerado[aux]; 
+			descricao[aux] = descricaoGerada[aux]; 
 		}
-		System.out.println("\nNúmero total de clientes: " + numClientes);*/
+		
+		/* Agora, iremos preencher os vetores "telefone" (Cliente), "valorCompra", "porcentLucro" 
+		 * e "qtdEstoque" (Produto) com valores gerados aleatoriamente através da classe Random,
+		 * de modo a randomizar os dados inseridos no programa.
+		 * */
+		
+		for(aux = 0; aux < 10; aux++) { // Gerando os telefones aleatórios (com DDD)
+			telefone[aux] = "(" + random.nextInt(9) + random.nextInt(9) + ") 9" + random.nextInt(9) + random.nextInt(9) + random.nextInt(9) + random.nextInt(9) + "-" + random.nextInt(9) + random.nextInt(9) + random.nextInt(9) + random.nextInt(9);
+		}
+		
+		for(aux = 0; aux < 10; aux++) {
+			valorCompra[aux] = (random.nextDouble() + 0.1) * 10; // Inserindo um valor de compra aleatório que necessariamente será maior que 1
+			porcentLucro[aux] = random.nextDouble() * 100; //Gerando uma porcentagem de lucro entre 0 e 100
+			qtdEstoque[aux] = random.nextInt(1000); // Gerando uma quantidade de estoque entre 0 e 1000
+		}
+		
+		/* Como estamos inserindo 10 Clientes e 10 Produtos, serão incrementados em 10 os contadores
+		 * de clientes (numClientes) e produtos (numProdutos) abaixo.
+		 * */
+		numClientes += 10;
+		numProdutos += 10;
+		
+		/*System.out.println("Apresentando os dados dos clientes inseridos (teste): ");
+		for(aux = 0; aux < 10; aux++) {
+			System.out.println("Nome: " + aux + ": " + nome[aux]);
+			System.out.println("Endereço: " + endereco[aux]);
+			System.out.println("Telefone: " + telefone[aux]);
+			System.out.println("\n");
+		}
+		
+		System.out.println("\nApresentando os dados dos produtos inseridos (teste): ");
+		for(aux = 0; aux < 10; aux++) {
+			System.out.println("Nome do: " + aux + "º produto: " + nomeProduto[aux]);
+			System.out.println("Descrição: " + descricao[aux]);
+			System.out.println("Valor de Compra: R$ " + valorCompra[aux]);
+			System.out.println("Porcentagem de Lucro: " + porcentLucro[aux] + "%");
+			System.out.println("Quantidade no Esoque: " + qtdEstoque[aux]);
+			System.out.println("\n");
+		}*/
+		
 	}
 	
 	
@@ -311,6 +369,56 @@ public class ControleClientesProdutos_Tp1 {
 			
 			System.out.println("\nDados Atualizados!");			
 		}
+	}
+	
+	
+	
+	public static void cadastrarVendas(String nome[], String nomeProduto[], int qtdEstoque[]) {
+		int clienteEscolhido;
+		int produtoEscolhido;
+		Scanner ler = new Scanner(System.in);
+		
+		System.out.println("\n~ CADASTRO DE VENDAS ~");
+		
+		do{
+			System.out.println("\nSelecione o(a) cliente: ");
+			
+			for (int i = 0; i < numClientes; i++) {
+				System.out.println((i+1) + " - " + nome[i] + "");
+			}
+			
+			System.out.print("Opção Escolhida: ");
+			clienteEscolhido = ler.nextInt();	
+			
+			if(clienteEscolhido < 1 || clienteEscolhido > numClientes) {
+				System.out.println("Opção Inválida!\n");
+			}
+			
+		}while(clienteEscolhido < 1 || clienteEscolhido > numClientes);
+		
+		criarLinha(40); //Inserindo linha para melhorar a estética do programa		
+		clienteEscolhido--; //Desta forma, a variável estará armazenando a posição do cliente no vetor (index do cliente)
+		
+		do{
+			System.out.println("\nSelecione o produto: ");
+			
+			for (int i = 0; i < numProdutos; i++) {
+				System.out.println((i+1) + " - " + nomeProduto[i] + "");
+				System.out.println("Quantidade no Estoque: " + qtdEstoque[i] + ".\n");
+			}
+			
+			System.out.print("Opção Escolhida: ");
+			produtoEscolhido = ler.nextInt();	
+			
+			if(produtoEscolhido < 1 || produtoEscolhido > numProdutos) {
+				System.out.println("\nOpção Inválida!\n");
+			}
+			
+		}while(produtoEscolhido < 1 || produtoEscolhido > numProdutos);
+		
+		criarLinha(40); //Inserindo linha para melhorar a estética do programa
+		produtoEscolhido--; //Desta forma, a variável estará armazenando a posição do produto no vetor (index do produto)
+		
 	}
 
 	
