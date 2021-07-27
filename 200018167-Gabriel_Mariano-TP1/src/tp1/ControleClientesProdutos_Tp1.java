@@ -45,7 +45,15 @@ public class ControleClientesProdutos_Tp1 {
 			
 				case 1: // Cadastro de novo cliente
 					criarLinha(60);
-					cadastrarClientes(nome, endereco, telefone);
+					/* O seguinte if...else verifica se o número de clientes cadastrados não atingiu
+					 * seu valor máximo, que é o tamanho do vetor
+					 * */
+					if(numClientes < TAMANHO_VETOR) {
+						cadastrarClientes(nome, endereco, telefone);
+					} else {
+						System.out.println("\nNÚMERO MÁXIMO DE CLIENTES CADASTRADOS ATINGIDO!");
+						System.out.println("Por favor, contate o desenvolvedor!");
+					}
 					break;
 					
 				case 2: // Busca por cliente
@@ -55,7 +63,15 @@ public class ControleClientesProdutos_Tp1 {
 					
 				case 3: // Cadastro de novo produto
 					criarLinha(60);
-					cadastrarProdutos(nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
+					/* O seguinte if...else verifica se o número de clientes cadastrados não atingiu
+					 * seu valor máximo, que é o tamanho do vetor
+					 * */
+					if(numProdutos < TAMANHO_VETOR) {
+						cadastrarProdutos(nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
+					} else {
+						System.out.println("\nNÚMERO MÁXIMO DE PRODUTOS CADASTRADOS ATINGIDO!");
+						System.out.println("Por favor, contate o desenvolvedor!");
+					}
 					break;
 					
 				case 4: // Busca por produto
