@@ -2,6 +2,7 @@ package tp1;
 import java.util.*;
 
 public class ControleClientesProdutos_Tp1 {
+	
 	public static int TAMANHO_VETOR = 50; // Essa constante define o tamanho máximo de todos os vetores
 	public static int numClientes = 0; // Variável que conta o número de clientes cadastrados
 	public static int numProdutos = 0; // Variável que conta o número de produtos cadastrados
@@ -36,7 +37,7 @@ public class ControleClientesProdutos_Tp1 {
 		 * usuário para o método escolhido.
 		 * O loop somente se encerrará quando o usuário escolher a opção SAIR.
 		 * */
-		do{
+		do {
 			/* Chamando o método que imprime o Menu e retorna a opção escolhida pelo usuário
 			 * */
 			opcMenu = imprimirMenu(); 
@@ -45,6 +46,7 @@ public class ControleClientesProdutos_Tp1 {
 			
 				case 1: // Cadastro de novo cliente
 					criarLinha(60);
+					
 					/* O seguinte if...else verifica se o número de clientes cadastrados não atingiu
 					 * seu valor máximo, que é o tamanho do vetor
 					 * */
@@ -63,6 +65,7 @@ public class ControleClientesProdutos_Tp1 {
 					
 				case 3: // Cadastro de novo produto
 					criarLinha(60);
+					
 					/* O seguinte if...else verifica se o número de clientes cadastrados não atingiu
 					 * seu valor máximo, que é o tamanho do vetor
 					 * */
@@ -81,6 +84,7 @@ public class ControleClientesProdutos_Tp1 {
 					
 				case 5: // Cadastro de venda
 					criarLinha(60);
+					
 					if(existeEstoque(qtdEstoque)) { 
 						// Este método verifica se a quant. de estoque é diferente de zero.
 						cadastrarVendas(nome, nomeProduto, qtdEstoque);
@@ -101,6 +105,7 @@ public class ControleClientesProdutos_Tp1 {
 					
 				case 7: // Sair
 					criarLinha(60);
+					
 					System.out.println("\nEncerrando! Obrigado por usar o programa!");
 					break;
 					
@@ -114,7 +119,9 @@ public class ControleClientesProdutos_Tp1 {
 					criarLinha(60);
 			}
 			criarLinha(60);
+			
 		}while(opcMenu != 7);
+		
 	}
 	
 	
