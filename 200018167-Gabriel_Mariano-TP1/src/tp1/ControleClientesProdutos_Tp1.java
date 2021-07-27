@@ -32,38 +32,53 @@ public class ControleClientesProdutos_Tp1 {
 			opcMenu = imprimirMenu(); // Chamando o método que imprime o Menu e retorna a opção escolhida pelo usuário
 
 			switch (opcMenu) { // Direcionando o usuário de acordo com a opção desejada
+			
 				case 1: // Cadastro de novo cliente
 					criarLinha(60);
 					cadastrarClientes(nome, endereco, telefone);
 					break;
+					
 				case 2: // Busca por cliente
 					criarLinha(60);
 					buscarClientes(nome, endereco, telefone);
 					break;
+					
 				case 3: // Cadastro de novo produto
 					criarLinha(60);
 					cadastrarProdutos(nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
 					break;
+					
 				case 4: // Busca por produto
 					criarLinha(60);
 					buscarProdutos(nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
 					break;
+					
 				case 5: // Cadastro de venda
 					criarLinha(60);
-					cadastrarVendas(nome, nomeProduto, qtdEstoque);
+					if(existeEstoque(qtdEstoque)) {
+						cadastrarVendas(nome, nomeProduto, qtdEstoque);
+					} else {
+						System.out.println("\nNÃO HÁ PRODUTOS NO ESTOQUE!");
+						System.out.println("Insira mais produtos ou atualize a quantidade de estoque!");
+					}
 					break;
+					
 				case 6: // Mostrar produtos em estoque
+					criarLinha(60);
+					System.out.println("\n~ MOSTRAR ESTOQUE ~\n");
+					listarProdutos(nomeProduto, qtdEstoque);
 					break;
+					
 				case 7: // Sair
 					criarLinha(60);
 					System.out.println("\nEncerrando! Obrigado por usar o programa!");
 					break;
+					
 				default: // O default está sendo usado apenas para evitar possíveis problemas, pois os valores já são verificados no próprio menu!
 					criarLinha(60);
 					System.out.println("\nERRO!");
 					criarLinha(60);
 			}
-			
 			criarLinha(60);
 		}while(opcMenu != 7);
 	}
@@ -104,7 +119,8 @@ public class ControleClientesProdutos_Tp1 {
 		for(aux = 0; aux < 10; aux++) {
 			valorCompra[aux] = (random.nextDouble() + 0.1) * 10; // Inserindo um valor de compra aleatório que necessariamente será maior que 1
 			porcentLucro[aux] = random.nextDouble() * 100; //Gerando uma porcentagem de lucro entre 0 e 100
-			qtdEstoque[aux] = random.nextInt(1000); // Gerando uma quantidade de estoque entre 0 e 1000
+			//qtdEstoque[aux] = random.nextInt(150); // Gerando uma quantidade de estoque entre 0 e 150
+			qtdEstoque[aux] = 0;
 		}
 		
 		/* Como estamos inserindo 10 Clientes e 10 Produtos, serão incrementados em 10 os contadores
@@ -112,25 +128,6 @@ public class ControleClientesProdutos_Tp1 {
 		 * */
 		numClientes += 10;
 		numProdutos += 10;
-		
-		/*System.out.println("Apresentando os dados dos clientes inseridos (teste): ");
-		for(aux = 0; aux < 10; aux++) {
-			System.out.println("Nome: " + aux + ": " + nome[aux]);
-			System.out.println("Endereço: " + endereco[aux]);
-			System.out.println("Telefone: " + telefone[aux]);
-			System.out.println("\n");
-		}
-		
-		System.out.println("\nApresentando os dados dos produtos inseridos (teste): ");
-		for(aux = 0; aux < 10; aux++) {
-			System.out.println("Nome do: " + aux + "º produto: " + nomeProduto[aux]);
-			System.out.println("Descrição: " + descricao[aux]);
-			System.out.println("Valor de Compra: R$ " + valorCompra[aux]);
-			System.out.println("Porcentagem de Lucro: " + porcentLucro[aux] + "%");
-			System.out.println("Quantidade no Esoque: " + qtdEstoque[aux]);
-			System.out.println("\n");
-		}*/
-		
 	}
 	
 	
@@ -166,6 +163,24 @@ public class ControleClientesProdutos_Tp1 {
 		}while(opcao < 1 || opcao > 7); // Qualquer opção que não esteja no intervalo 1-7 é inválida
 
 		return opcao; // Retornando a opção escolhida pelo usuário
+	}
+	
+	
+	
+	public static boolean existeEstoque(int qtdEstoque[]) {
+		int somaEstoque = 0;
+		
+		if(numProdutos != 0) {
+			for(int aux = 0; aux < numProdutos; aux++) {
+				somaEstoque += qtdEstoque[aux];
+			}
+		}
+		
+		if(somaEstoque > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	
@@ -376,13 +391,14 @@ public class ControleClientesProdutos_Tp1 {
 	public static void cadastrarVendas(String nome[], String nomeProduto[], int qtdEstoque[]) {
 		int clienteEscolhido;
 		int produtoEscolhido;
+		int quantidadeVendida;
+		char continuarVendendo;
 		Scanner ler = new Scanner(System.in);
 		
 		System.out.println("\n~ CADASTRO DE VENDAS ~");
 		
 		do{
-			System.out.println("\nSelecione o(a) cliente: ");
-			
+			System.out.println("Selecione o(a) cliente: ");
 			for (int i = 0; i < numClientes; i++) {
 				System.out.println((i+1) + " - " + nome[i] + "");
 			}
@@ -396,30 +412,72 @@ public class ControleClientesProdutos_Tp1 {
 			
 		}while(clienteEscolhido < 1 || clienteEscolhido > numClientes);
 		
-		criarLinha(40); //Inserindo linha para melhorar a estética do programa		
 		clienteEscolhido--; //Desta forma, a variável estará armazenando a posição do cliente no vetor (index do cliente)
 		
 		do{
-			System.out.println("\nSelecione o produto: ");
+			criarLinha(40);
 			
-			for (int i = 0; i < numProdutos; i++) {
-				System.out.println((i+1) + " - " + nomeProduto[i] + "");
-				System.out.println("Quantidade no Estoque: " + qtdEstoque[i] + ".\n");
-			}
+			System.out.println("\nSelecione o produto vendido: ");
+			listarProdutos(nomeProduto, qtdEstoque);
 			
 			System.out.print("Opção Escolhida: ");
-			produtoEscolhido = ler.nextInt();	
+			produtoEscolhido = ler.nextInt();
 			
-			if(produtoEscolhido < 1 || produtoEscolhido > numProdutos) {
-				System.out.println("\nOpção Inválida!\n");
+			if(qtdEstoque[(produtoEscolhido-1)] != 0) {
+				do {
+					if(produtoEscolhido < 1 || produtoEscolhido > numProdutos) {
+						System.out.println("\nOpção Inválida! Digite uma opção entre 1 e " + numProdutos + ".\n");
+						System.out.print("Opção Escolhida: ");
+						produtoEscolhido = ler.nextInt();
+					}
+				}while(produtoEscolhido < 1 || produtoEscolhido > numProdutos);
+			
+				produtoEscolhido--;//Desta forma, a variável estará armazenando a posição do produto no vetor (index do produto)
+			
+				do {
+					System.out.print("\nQuantidade de " + nomeProduto[produtoEscolhido] + " vendida: ");
+					quantidadeVendida = ler.nextInt();		
+				
+					if(quantidadeVendida < 1 || quantidadeVendida > qtdEstoque[produtoEscolhido]) {
+						System.out.println("Quantidade Inválida! Selecione uma quantidade entre 1 e " + qtdEstoque[produtoEscolhido] + ".");
+					}
+				}while(quantidadeVendida < 1 || quantidadeVendida > qtdEstoque[produtoEscolhido]);
+			
+				qtdEstoque[produtoEscolhido] -= quantidadeVendida;
+			
+				do {
+					System.out.print("\nDeseja continuar vendendo? ('S' ou 'N'): ");
+					continuarVendendo = ler.next().charAt(0);
+					ler.nextLine(); //Limpando Buffer
+			
+					if (continuarVendendo != 's' && continuarVendendo != 'S' && continuarVendendo != 'n' && continuarVendendo != 'N') {
+						System.out.println("Caractere inválido!"); // Se o usuário digitar um caractere diferente do esperado, será apresentado o erro e ele deverá digitar um caractere válido para encerrar o loop
+					}
+					
+				}while(continuarVendendo != 's' && continuarVendendo != 'S' && continuarVendendo != 'n' && continuarVendendo != 'N');
+		
+			} else {
+				System.out.println("\nProduto atualmente indisponível! Selecione outro!");
+				continuarVendendo = 's';
 			}
 			
-		}while(produtoEscolhido < 1 || produtoEscolhido > numProdutos);
-		
-		criarLinha(40); //Inserindo linha para melhorar a estética do programa
-		produtoEscolhido--; //Desta forma, a variável estará armazenando a posição do produto no vetor (index do produto)
-		
+			if(!existeEstoque(qtdEstoque)) {
+				System.out.println("\nNÃO HÁ PRODUTOS NO ESTOQUE!");
+				System.out.println("Insira mais produtos ou atualize a quantidade de estoque!");
+				break;
+			}
+		}while(continuarVendendo == 's' || continuarVendendo == 'S');			
 	}
+	
+	
+	
+	public static void listarProdutos(String nomeProduto[], int qtdEstoque[]) {
+		for (int i = 0; i < numProdutos; i++) {
+			System.out.print((i+1) + " - " + nomeProduto[i] + "    ");
+			System.out.print("(Quantidade no Estoque: " + qtdEstoque[i] + ").\n");
+		}
+	}
+
 
 	
 }
