@@ -234,7 +234,7 @@ public class ControleClientesProdutos_Tp1 {
 			 * nesses casos, o usuário digite outro valor.
 			 * */
 			if(qtdCadastrar < 1 || qtdCadastrar > (TAMANHO_VETOR - numClientes)) { 
-				System.out.println("O valor inserido deve ser maior que zero e menor que " + (TAMANHO_VETOR - numClientes) + "!\n");
+				System.out.println("O valor inserido deve estar entre 1 e " + (TAMANHO_VETOR - numClientes) + "!\n");
 			}
 		}while(qtdCadastrar < 1 || qtdCadastrar > (TAMANHO_VETOR - numClientes));
 		
@@ -487,20 +487,35 @@ public class ControleClientesProdutos_Tp1 {
 			System.out.println("\nSelecione o produto vendido: ");
 			listarProdutos(nomeProduto, qtdEstoque); // Listando os produtos cadastrados
 			
-			System.out.print("Opção Escolhida: ");
-			produtoEscolhido = ler.nextInt();
 			
-			if(qtdEstoque[(produtoEscolhido-1)] != 0) {
-				do {
-					if(produtoEscolhido < 1 || produtoEscolhido > numProdutos) {
-						System.out.println("\nOpção Inválida! Digite uma opção entre 1 e " + numProdutos + ".\n");
-						System.out.print("Opção Escolhida: ");
-						produtoEscolhido = ler.nextInt();
-					}
-				}while(produtoEscolhido < 1 || produtoEscolhido > numProdutos);
+			/* O seguinte loop do...while verifica se a opção escolhida é válida, isto é,
+			 * se o usuário selecionou um produto dentre os disponíveis
+			 * */
+			do {
+				System.out.print("Opção Escolhida: ");
+				produtoEscolhido = ler.nextInt();
+				
+				if(produtoEscolhido < 1 || produtoEscolhido > numProdutos) {
+					System.out.println("\nOpção Inválida! Digite uma opção entre 1 e " + numProdutos + ".\n");
+				}
+			}while(produtoEscolhido < 1 || produtoEscolhido > numProdutos);
 			
-				produtoEscolhido--;//Desta forma, a variável estará armazenando a posição do produto no vetor (index do produto)
 			
+			/* A variável produtoEscolhido será subtraída em 1
+			 * para armazenar a posição do produto no vetor (index do produto)
+			 * */
+			produtoEscolhido--;
+			
+			
+			/* O seguinte if...else verifica se o estoque do produto escolhido não é igual a zero,
+			 * isto é, se há estoque disponível do produto
+			 * */
+			if(qtdEstoque[produtoEscolhido] != 0) {
+				
+				/* O seguinte do...while verifica se o produto possui estoque suficiente para a quantidade
+				 * vendida, isto é, se o valor da variável "quantidadeVendida" é menor que o valor do vetor
+				 * "qtdEstoque[]" no index do produto escolhido
+				 * */
 				do {
 					System.out.print("\nQuantidade de " + nomeProduto[produtoEscolhido] + " vendida: ");
 					quantidadeVendida = ler.nextInt();		
@@ -510,8 +525,14 @@ public class ControleClientesProdutos_Tp1 {
 					}
 				}while(quantidadeVendida < 1 || quantidadeVendida > qtdEstoque[produtoEscolhido]);
 			
+				/* Uma vez realizada a venda, subtraímos a quantidade vendida do estoque do produto
+				 * */
 				qtdEstoque[produtoEscolhido] -= quantidadeVendida;
 			
+				
+				/* O seguinte loop do...while verifica se o usuário quer cadastrar mais uma venda para o
+				 * cliente selecionado
+				 * */
 				do {
 					System.out.print("\nDeseja continuar vendendo? ('S' ou 'N'): ");
 					continuarVendendo = ler.next().charAt(0);
@@ -524,10 +545,17 @@ public class ControleClientesProdutos_Tp1 {
 				}while(continuarVendendo != 's' && continuarVendendo != 'S' && continuarVendendo != 'n' && continuarVendendo != 'N');
 		
 			} else {
+				/* Caso o usuário selecione um produto que não possui estoque, é mostrada mensagem informando
+				 * que o produto está indisponível e o usuário poderá selecionar outro produto para cadastrar
+				 * a venda (o loop se repetirá)
+				 * */
 				System.out.println("\nProduto atualmente indisponível! Selecione outro!");
 				continuarVendendo = 's';
 			}
 			
+			/* Se o método existeEstoque() verificar que não há nenhum produto com estoque disponível, o
+			 * loop será encerrado com um "break" e o programa retornará para o menu inicial
+			 * */
 			if(!existeEstoque(qtdEstoque)) {
 				System.out.println("\nNÃO HÁ PRODUTOS NO ESTOQUE!");
 				System.out.println("Insira mais produtos ou atualize a quantidade de estoque!");
@@ -537,14 +565,13 @@ public class ControleClientesProdutos_Tp1 {
 	}
 	
 	
-	
+	/* O seguinte método mostra todos os produtos cadastrados e suas respectivas quantidades
+	 * disponíveis no estoque.
+	 * */
 	public static void listarProdutos(String nomeProduto[], int qtdEstoque[]) {
-		for (int i = 0; i < numProdutos; i++) {
+		for (int i = 0; i < numProdutos; i++) { // Loop que passa por todos os produtos e suas respectivas quantidades
 			System.out.print((i+1) + " - " + nomeProduto[i] + "    ");
 			System.out.print("(Quantidade no Estoque: " + qtdEstoque[i] + ").\n");
 		}
 	}
-
-
-	
 }
