@@ -4,10 +4,10 @@ import java.util.*;
 public class ControleClientesProdutos_Tp1 {
 	
 	public static int TAMANHO_VETOR = 50; // Essa constante define o tamanho máximo de todos os vetores
-	public static int numClientes = 0; // Variável que conta o número de clientes cadastrados
-	public static int numProdutos = 0; // Variável que conta o número de produtos cadastrados
+	public static int numClientes = 0; // Armazena o número de clientes cadastrados
+	public static int numProdutos = 0; // Armazena o número de produtos cadastrados
 	
-	public static void main(String[] args) { // Método Principal
+	public static void main(String[] args) {
 		int opcMenu;
 		
 		// Dados dos Clientes
@@ -23,31 +23,26 @@ public class ControleClientesProdutos_Tp1 {
 		int [] qtdEstoque = new int[TAMANHO_VETOR];
 		
 		/* O método chamado abaixo preenche os vetores com dados (10 produtos e 10 clientes).
-		 * Dados como telefone (cliente), valorCompra, porcentLucro e qtdEstoque (produto) 
-		 * são preenchidos com valores gerados aleatoriamente.
 		 * */		
 		preencherVetores(nome, endereco, telefone, nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
 		
 		Scanner ler = new Scanner(System.in);
 
-		criarLinha(60); // Imprimindo uma linha (apenas pela estética)
+		criarLinha(60); 
 		System.out.println("\nSeja bem vindo(a)!");
 
 		/* O loop do...while abaixo apresenta o menu de opções e, através de um switch...case, ordena o 
 		 * usuário para o método escolhido.
-		 * O loop somente se encerrará quando o usuário escolher a opção SAIR.
 		 * */
 		do {
-			/* Chamando o método que imprime o Menu e retorna a opção escolhida pelo usuário
-			 * */
-			opcMenu = imprimirMenu(); 
+			opcMenu = imprimirMenu(); // Recebendo o valor do menu escolhido
 
-			switch (opcMenu) { // Direcionando o usuário de acordo com a opção desejada
+			switch (opcMenu) { 
 			
 				case 1: // Cadastro de novo cliente
 					criarLinha(60);
 					
-					/* O seguinte if...else verifica se o número de clientes cadastrados não atingiu
+					/* Verificando se o número de clientes cadastrados não atingiu
 					 * seu valor máximo, que é o tamanho do vetor
 					 * */
 					if(numClientes < TAMANHO_VETOR) {
@@ -66,8 +61,8 @@ public class ControleClientesProdutos_Tp1 {
 				case 3: // Cadastro de novo produto
 					criarLinha(60);
 					
-					/* O seguinte if...else verifica se o número de clientes cadastrados não atingiu
-					 * seu valor máximo, que é o tamanho do vetor
+					/* Verificando se o número de produtos cadastrados não atingiu
+					 * seu valor máximo
 					 * */
 					if(numProdutos < TAMANHO_VETOR) {
 						cadastrarProdutos(nomeProduto, descricao, valorCompra, porcentLucro, qtdEstoque);
@@ -85,13 +80,12 @@ public class ControleClientesProdutos_Tp1 {
 				case 5: // Cadastro de venda
 					criarLinha(60);
 					
+					/* Verificando se há produtos cadastrados com estoque maior que zero para
+					 * que a venda seja executada
+					 * */
 					if(existeEstoque(qtdEstoque)) { 
-						// Este método verifica se a quant. de estoque é diferente de zero.
 						cadastrarVendas(nome, nomeProduto, qtdEstoque);
 					} else {
-						/* Se a soma das quantidades dos produtos no estoque for igual a 0, não será possível
-						 * executar uma venda e, consequentemente, o método cadastrarVendas() não será executado.
-						 * */
 						System.out.println("\nNÃO HÁ PRODUTOS NO ESTOQUE!");
 						System.out.println("Insira mais produtos ou atualize a quantidade de estoque!");
 					}
@@ -110,9 +104,8 @@ public class ControleClientesProdutos_Tp1 {
 					break;
 					
 				default: 
-					/* O default está sendo usado apenas para evitar possíveis problemas, 
-					 * pois os valores já são verificados no próprio menu e, caso sejam divergentes
-					 * das opções do menu, o usuário será compelido a digitar outro valor!
+					/* Apenas por precaução, pois a opção do menu escolhida pelo usuário
+					 * já é validada logo após sua inserção
 					 * */
 					criarLinha(60);
 					System.out.println("\nERRO!");
@@ -139,9 +132,10 @@ public class ControleClientesProdutos_Tp1 {
 		String [] descricaoGerada = {"Chocolate", "Batata Chip", "Doce de Amendoim", "Pacote de Gelatina", "Compota de Geléia", "Chocolate com Granulado", "Mousse de Maracujá", "Fruta Laranja", "Fruta Banana", "Fruta Maçã"};
 		
 		
-		Random random = new Random(); // Instanciando a classe Random
+		Random random = new Random();
 		
-		for(aux = 0; aux < 10; aux++) { //Preenchendo os vetores com os dados carregados dos produtos e clientes
+		//Preenchendo os vetores com os dados carregados dos produtos e clientes
+		for(aux = 0; aux < 10; aux++) { 
 			nome[aux] = nomesGerados[aux]; 
 			endereco[aux] = enderecosGerados[aux]; 
 			
@@ -168,9 +162,6 @@ public class ControleClientesProdutos_Tp1 {
 			qtdEstoque[aux] = random.nextInt(150); // Valor aleatório entre 0 e 150
 		}
 		
-		/* Como estamos inserindo 10 Clientes e 10 Produtos, serão incrementados em 10 os contadores
-		 * de clientes (numClientes) e produtos (numProdutos) abaixo.
-		 * */
 		numClientes += 10;
 		numProdutos += 10;
 	}
@@ -180,7 +171,7 @@ public class ControleClientesProdutos_Tp1 {
 	 */
 	public static void criarLinha(int tamanho) { 
 		for(int aux = 0; aux < tamanho; aux++) {	
-			System.out.print("-"); // Imprimindo a linha com o tamanho pedido
+			System.out.print("-"); 
 		}
 	}
 	
@@ -191,7 +182,7 @@ public class ControleClientesProdutos_Tp1 {
 		int opcao;
 		Scanner ler = new Scanner(System.in);
 
-		do{ // Estrutura que ficará em loop enquanto o usuário não digitar a opção digitada
+		do{ // Estrutura que ficará em loop enquanto o usuário não digitar uma opção válida
 			System.out.println("\nPor favor, siga o menu abaixo e escolha a opção desejada:");
 			System.out.println("1 - CADASTRAR NOVO CLIENTE");
 			System.out.println("2 - BUSCAR POR CLIENTE");
@@ -203,20 +194,18 @@ public class ControleClientesProdutos_Tp1 {
 			System.out.print("Opção desejada: ");
 			opcao = ler.nextInt();
 
-			if (opcao < 1 || opcao > 7) { // Se a opção for inválida, ele apresentará mensagem ao usuário
+			if (opcao < 1 || opcao > 7) { 
 				System.out.println("\nOPÇÃO INVÁLIDA!");
 				criarLinha(60);
 			}
-		}while(opcao < 1 || opcao > 7); // Qualquer opção que não esteja no intervalo 1-7 é inválida
+		}while(opcao < 1 || opcao > 7); 
 
-		return opcao; // Retornando a opção escolhida pelo usuário
+		return opcao; 
 	}
 	
 	
-	/* O método abaixo verifica se a soma da quantidade de estoque dos produtos
-	 * é diferente de zero. Isto é, mesmo que existam vários produtos cadastrados,
-	 * se eles não apresentarem estoque algumas funcionalidades do programa
-	 * (especialmente relacionados à venda) não poderão ser executadas.
+	/* O método abaixo verifica se a soma da quantidade de estoque de todos
+	 * os produtos é diferente de zero.
 	 * */
 	public static boolean existeEstoque(int qtdEstoque[]) {
 		int somaEstoque = 0;
@@ -227,10 +216,11 @@ public class ControleClientesProdutos_Tp1 {
 			}
 		}
 		
-		if(somaEstoque > 0) { // Se a soma do estoque for maior que 0...
-			return true; // ...retornaremos true
+		if(somaEstoque > 0) { 
+			// Caso exista estoque dos produtos...
+			return true; 
 		} else {
-			return false; // Caso contrário, retornaremos false
+			return false; 
 		}
 	}
 	
@@ -244,18 +234,13 @@ public class ControleClientesProdutos_Tp1 {
 		System.out.println("\n~ CADASTRAR CLIENTES ~");
 		
 		/* O usuário deverá digitar uma quant. de clientes a serem cadastrados 
-		 * maior ou igual a 1 e menor que o tamanho máximo dos vetores (ver TAMANHO_VETOR), 
-		 * de modo que a soma dos clientes já cadastrados com os clientes a serem cadastrados 
-		 * também seja menor que o TAMANHO_VETOR
+		 * maior que 0 e que não exceda o tamanho máximo dos vetores (ver TAMANHO_VETOR)
 		 * */
 		do { 
 			System.out.print("Digite a quantidade de clientes a serem cadastrados: ");
-			qtdCadastrar = ler.nextInt();	
+			qtdCadastrar = ler.nextInt();
 			
-			/* Apresenta mensagem para informar o erro ao usuário caso o número de clientes a serem
-			 * cadastrados seja menor que 1 ou exceda o tamanho máximo dos vetores, pedindo para que,
-			 * nesses casos, o usuário digite outro valor.
-			 * */
+			// Verificando se a quantidade é válida...
 			if(qtdCadastrar < 1 || qtdCadastrar > (TAMANHO_VETOR - numClientes)) { 
 				System.out.println("O valor inserido deve estar entre 1 e " + (TAMANHO_VETOR - numClientes) + "!\n");
 			}
@@ -264,16 +249,16 @@ public class ControleClientesProdutos_Tp1 {
 		ler.nextLine(); // Limpando o Buffer do Teclado
 		
 		for(int aux = 0; aux < qtdCadastrar; aux++) { // Recebendo os dados dos clientes
-			System.out.print("\nDigite o " + (aux+1) + "º nome: "); // Recebendo o nome
+			System.out.print("\nDigite o " + (aux+1) + "º nome: "); 
 			nome[numClientes] = ler.nextLine();
 			
-			System.out.print("Digite seu endereço: "); // Recebendo o endereço
+			System.out.print("Digite seu endereço: "); 
 			endereco[numClientes] = ler.nextLine();
 			
-			System.out.print("Digite seu telefone: "); // Recebendo o telefone
+			System.out.print("Digite seu telefone: "); 
 			telefone[numClientes] = ler.nextLine();
 			
-			numClientes++; // Incrementando o número de clientes cadastrados
+			numClientes++;
 		}
 		
 		System.out.println("\nCliente(s) cadastrados(as) com sucesso!");
@@ -296,29 +281,23 @@ public class ControleClientesProdutos_Tp1 {
 		
 		for(int i = 0; i < numClientes; i++) { // Verificando se o nome do cliente está cadastrado!
 			if(nome[i].equals(nomeBuscar)) {
-				/* Caso o nome do cliente esteja armazenado no vetor, a variável clienteExiste
-				 * será TRUE e armazenaremos o index do cliente no vetor!
-				 * */
 				clienteExiste = true; 
 				indexCliente = i;
 			}
 		}
 		
-		if(clienteExiste) { // Se o cliente estiver armazenado no sistema...
+		if(clienteExiste) { 
 			System.out.println("\nDADOS DO CLIENTE: ");
 			System.out.println("Nome: " + nome[indexCliente]);
 			System.out.println("Endereço: " + endereco[indexCliente]);
 			System.out.println("Telefone: " + telefone[indexCliente]);
 			
-			do { // Verificando se o usuário deseja alterar os dados do cliente em questão 
+			do { 
 				System.out.print("\nDeseja alterar os dados do(a) cliente? ('S' ou 'N'): ");
 				desejaAlterar = ler.next().charAt(0);
 				ler.nextLine(); //Limpando Buffer
 				
-				/* Se o usuário digitar um caractere diferente do esperado, 
-				 * será apresentado o erro e ele deverá digitar um caractere 
-				 * válido para encerrar o loop. Serão aceitos os caracteres
-				 * 'S' e 'N', tanto maiúsculos quanto minúsculos.
+				/* Verificando se o caractere digitado é válido
 				 * */
 				if (desejaAlterar != 's' && desejaAlterar != 'S' && desejaAlterar != 'n' && desejaAlterar != 'N') {
 					System.out.println("Caractere inválido!"); 
@@ -327,10 +306,10 @@ public class ControleClientesProdutos_Tp1 {
 		
 		} else {
 			System.out.println("\nCliente não encontrado!");
-			desejaAlterar = 'n'; // Se o cliente não for encontrado, não será possível armazenar seus dados
+			desejaAlterar = 'n'; // Se o cliente não for encontrado, não será possível alterar seus dados
 		}
 		
-		if (desejaAlterar == 'S' || desejaAlterar == 's') { //Se o usuário quiser alterar os dados...
+		if (desejaAlterar == 'S' || desejaAlterar == 's') { 
 			System.out.println("\n ~ Alterando Nome ~");
 			System.out.print("Digite o nome do(a) cliente: ");
 			nome[indexCliente] = ler.nextLine();
@@ -356,31 +335,35 @@ public class ControleClientesProdutos_Tp1 {
 		
 		System.out.println("\n~ CADASTRAR PRODUTOS ~");
 		
-		do { // O usuário deverá digitar uma quant. de produtos a serem cadastrados maior ou igual a 1 e menor que o tamanho máximo dos vetores (ver TAMANHO_VETOR)
+		/* O usuário deverá digitar uma quant. de produtos a serem cadastrados 
+		 * maior ou igual a 1 e menor que o tamanho máximo dos vetores (ver TAMANHO_VETOR)
+		 * */
+		do { 
 			System.out.print("Digite a quantidade de produtos a serem cadastrados: ");
 			qtdCadastrar = ler.nextInt();	
 			
-			if(qtdCadastrar < 1 || qtdCadastrar > (TAMANHO_VETOR - numProdutos)) { // Apresenta mensagem para informar o erro ao usuário
+			// Verificando se o valor inserido é válido
+			if(qtdCadastrar < 1 || qtdCadastrar > (TAMANHO_VETOR - numProdutos)) { 
 				System.out.println("O valor inserido deve estar entre 1 e " + (TAMANHO_VETOR - numProdutos) + "!\n");
 			}
-		}while(qtdCadastrar < 1 || qtdCadastrar > (TAMANHO_VETOR - numProdutos)); //Se repete até a quant. ser maior ou igual a 1 e menor ou igual ao TAMANHO_VETOR
+		}while(qtdCadastrar < 1 || qtdCadastrar > (TAMANHO_VETOR - numProdutos)); 
 		
 		for(int aux = 0; aux < qtdCadastrar; aux++) { // Recebendo os dados dos produtos
 			ler.nextLine(); // Limpando Buffer 
 			
-			System.out.print("\nDigite o nome do " + (aux+1) + "º produto: "); // Recebendo o nome
+			System.out.print("\nDigite o nome do " + (aux+1) + "º produto: "); 
 			nomeProduto[numProdutos] = ler.nextLine();
 			
-			System.out.print("Digite a descrição do produto: "); // Recebendo a descrição
+			System.out.print("Digite a descrição do produto: "); 
 			descricao[numProdutos] = ler.nextLine();
 			
-			System.out.print("Digite o valor de compra do produto: R$ "); // Recebendo o valor de compra
+			System.out.print("Digite o valor de compra do produto: R$ "); 
 			valorCompra[numProdutos] = ler.nextDouble();
 			
-			System.out.print("Digite a porcentagem de lucro do produto (sem '%'): "); // Recebendo a porcentagem de lucro
+			System.out.print("Digite a porcentagem de lucro do produto (sem '%'): "); 
 			porcentLucro[numProdutos] = ler.nextDouble();
 			
-			System.out.print("Digite a quantidade em estoque do produto: "); // Recebendo a qtd em estoque
+			System.out.print("Digite a quantidade em estoque do produto: "); 
 			qtdEstoque[numProdutos] = ler.nextInt();
 			
 			numProdutos++;
@@ -397,23 +380,22 @@ public class ControleClientesProdutos_Tp1 {
 		boolean produtoExiste = false;
 		String nomeProd;
 		int indexProduto = 0;
+		
 		Scanner ler = new Scanner(System.in);
 		
 		System.out.println("\n~ BUSCAR PRODUTOS ~");
 		System.out.print("Digite o nome do(a) produto a ser procurado: ");
 		nomeProd = ler.nextLine();
 		
-		for(int i = 0; i < numProdutos; i++) { // Verificando se o produto em questão está cadastrado!
+		// Verificando se o produto em questão está cadastrado!
+		for(int i = 0; i < numProdutos; i++) { 
 			if(nomeProduto[i].equals(nomeProd)) {
-				/* Caso o nome do produto esteja armazenado no vetor, a variável produtoExiste
-				 * será TRUE e armazenaremos o index do produto no vetor!
-				 * */
 				produtoExiste = true;
 				indexProduto = i;
 			}
 		}
 		
-		if(produtoExiste) { // Se o produto existir...
+		if(produtoExiste) { 
 			System.out.println("\nDADOS DO PRODUTO: ");
 			System.out.println("Nome do Produto: " + nomeProduto[indexProduto]);
 			System.out.println("Descrição: " + descricao[indexProduto]);
@@ -426,8 +408,9 @@ public class ControleClientesProdutos_Tp1 {
 				desejaAlterar = ler.next().charAt(0);
 				ler.nextLine(); //Limpando Buffer
 				
+				// Verificando validade do caractere digitado
 				if (desejaAlterar != 's' && desejaAlterar != 'S' && desejaAlterar != 'n' && desejaAlterar != 'N') {
-					System.out.println("Caractere inválido!"); // Se o usuário digitar um caractere diferente do esperado, será apresentado o erro e ele deverá digitar um caractere válido para encerrar o loop
+					System.out.println("Caractere inválido!"); 
 				}
 				
 			} while(desejaAlterar != 's' && desejaAlterar != 'S' && desejaAlterar != 'n' && desejaAlterar != 'N');
@@ -466,8 +449,6 @@ public class ControleClientesProdutos_Tp1 {
 	
 	
 	/* Método para cadastrar vendas!
-	 * Este método somente será acessível se a soma das quantidades de estoque dos produtos
-	 * cadastrados for maior que zero (ver método existeEstoque()).
 	 * */
 	public static void cadastrarVendas(String nome[], String nomeProduto[], int qtdEstoque[]) {
 		int clienteEscolhido;
@@ -490,29 +471,29 @@ public class ControleClientesProdutos_Tp1 {
 			System.out.print("Opção Escolhida: ");
 			clienteEscolhido = ler.nextInt();	
 			
+			// Verificando validade da opção escolhida
 			if(clienteEscolhido < 1 || clienteEscolhido > numClientes) { 
 				System.out.println("Opção Inválida!\n");
 			}
-			
 		}while(clienteEscolhido < 1 || clienteEscolhido > numClientes);
 		
-		clienteEscolhido--; //Desta forma, a variável estará armazenando a posição do cliente no vetor (index do cliente)
+		// Armazenando o index do cliente escolhido no vetor
+		clienteEscolhido--; 
 		
 		/* Este loop do...while serve para o usuário cadastrar as vendas realizadas.
 		 * Ele somente se encerrará se:
 		 * - O usuário não quiser cadastrar mais vendas para o cliente;
 		 * - A soma das quantidades de estoque dos produtos for igual a zero, isto é,
-		 * quando acabar o estoque (ver método existeEstoque()).
+		 * quando acabar o estoque.
 		 * */
 		do{
 			criarLinha(40);
 			
 			System.out.println("\nSelecione o produto vendido: ");
-			listarProdutos(nomeProduto, qtdEstoque); // Listando os produtos cadastrados
+			listarProdutos(nomeProduto, qtdEstoque);
 			
 			
-			/* O seguinte loop do...while verifica se a opção escolhida é válida, isto é,
-			 * se o usuário selecionou um produto dentre os disponíveis
+			/* Verificando se a opção escolhida é válida
 			 * */
 			do {
 				System.out.print("Opção Escolhida: ");
@@ -524,20 +505,16 @@ public class ControleClientesProdutos_Tp1 {
 			}while(produtoEscolhido < 1 || produtoEscolhido > numProdutos);
 			
 			
-			/* A variável produtoEscolhido será subtraída em 1
-			 * para armazenar a posição do produto no vetor (index do produto)
-			 * */
+			// Armazenando o index do produto escolhido no vetor
 			produtoEscolhido--;
 			
 			
-			/* O seguinte if...else verifica se o estoque do produto escolhido não é igual a zero,
-			 * isto é, se há estoque disponível do produto
+			/* O seguinte if...else verifica se há estoque disponível do produto
 			 * */
 			if(qtdEstoque[produtoEscolhido] != 0) {
 				
 				/* O seguinte do...while verifica se o produto possui estoque suficiente para a quantidade
-				 * vendida, isto é, se o valor da variável "quantidadeVendida" é menor que o valor do vetor
-				 * "qtdEstoque[]" no index do produto escolhido
+				 * vendida
 				 * */
 				do {
 					System.out.print("\nQuantidade de " + nomeProduto[produtoEscolhido] + " vendida: ");
@@ -548,36 +525,34 @@ public class ControleClientesProdutos_Tp1 {
 					}
 				}while(quantidadeVendida < 1 || quantidadeVendida > qtdEstoque[produtoEscolhido]);
 			
-				/* Uma vez realizada a venda, subtraímos a quantidade vendida do estoque do produto
-				 * */
 				qtdEstoque[produtoEscolhido] -= quantidadeVendida;
+				
+				System.out.println("Venda cadastrada com sucesso!");
 			
 				
-				/* O seguinte loop do...while verifica se o usuário quer cadastrar mais uma venda para o
-				 * cliente selecionado
+				/* O seguinte loop do...while verifica se o usuário quer cadastrar mais uma venda
 				 * */
 				do {
 					System.out.print("\nDeseja continuar vendendo? ('S' ou 'N'): ");
 					continuarVendendo = ler.next().charAt(0);
 					ler.nextLine(); //Limpando Buffer
-			
-					if (continuarVendendo != 's' && continuarVendendo != 'S' && continuarVendendo != 'n' && continuarVendendo != 'N') {
-						System.out.println("Caractere inválido!"); // Se o usuário digitar um caractere diferente do esperado, será apresentado o erro e ele deverá digitar um caractere válido para encerrar o loop
-					}
 					
+					// Verificando validade do caractere inserido
+					if (continuarVendendo != 's' && continuarVendendo != 'S' && continuarVendendo != 'n' && continuarVendendo != 'N') {
+						System.out.println("Caractere inválido!"); 
+					}
 				}while(continuarVendendo != 's' && continuarVendendo != 'S' && continuarVendendo != 'n' && continuarVendendo != 'N');
 		
 			} else {
-				/* Caso o usuário selecione um produto que não possui estoque, é mostrada mensagem informando
-				 * que o produto está indisponível e o usuário poderá selecionar outro produto para cadastrar
-				 * a venda (o loop se repetirá)
+				/* Caso selecione um produto que não possui estoque, 
+				 * o usuário poderá selecionar outro produto para cadastrar a venda 
 				 * */
 				System.out.println("\nProduto atualmente indisponível! Selecione outro!");
 				continuarVendendo = 's';
 			}
 			
 			/* Se o método existeEstoque() verificar que não há nenhum produto com estoque disponível, o
-			 * loop será encerrado com um "break" e o programa retornará para o menu inicial
+			 * loop será encerrado, tal qual o método de cadastrar vendas
 			 * */
 			if(!existeEstoque(qtdEstoque)) {
 				System.out.println("\nNÃO HÁ PRODUTOS NO ESTOQUE!");
@@ -588,13 +563,13 @@ public class ControleClientesProdutos_Tp1 {
 	}
 	
 	
-	/* O seguinte método mostra todos os produtos cadastrados e suas respectivas quantidades
-	 * disponíveis no estoque.
+	/* Listando todos os produtos cadastrados e suas quantidades de estoque
 	 * */
 	public static void listarProdutos(String nomeProduto[], int qtdEstoque[]) {
-		for (int i = 0; i < numProdutos; i++) { // Loop que passa por todos os produtos e suas respectivas quantidades
+		for (int i = 0; i < numProdutos; i++) {
 			System.out.print((i+1) + " - " + nomeProduto[i] + "    ");
 			System.out.print("(Quantidade no Estoque: " + qtdEstoque[i] + ").\n");
 		}
 	}
+	
 }
